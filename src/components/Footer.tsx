@@ -8,20 +8,20 @@ const Footer: React.FC = () => {
       <VStack align="center">
         {/* Footer Content */}
         <Text fontSize="sm" textAlign="center" color={"gray.500"}>
-          &copy; {new Date().getFullYear()} Your Name. All rights reserved.
+          &copy; {new Date().getFullYear()} Nathan Murdach.
         </Text>
 
         {/* Footer Links */}
         <HStack>
-        <Link href="https://github.com/MyPingO" target="_blank" outline={"none"}>
+        <Link href="https://github.com/MyPingO" target="_blank" textDecoration={"none"} outline={"none"}>
           <Github color="black" size={30} />
         </Link>
 
-        <Link href="https://www.youtube.com/@pingcode" target="_blank" outline={"none"}>
+        <Link href="https://www.youtube.com/@pingcode" target="_blank" textDecoration={"none"} outline={"none"}>
           <Youtube color="red" size={32} />
         </Link>
 
-        <Link href="https://www.linkedin.com/in/nathanmurdach/" target="_blank" outline={"none"}>
+        <Link href="https://www.linkedin.com/in/nathanmurdach/" target="_blank" textDecoration={"none"} outline={"none"}>
           <Linkedin color="rgb(10 102 194)" size={32} />
         </Link>
         </HStack>
