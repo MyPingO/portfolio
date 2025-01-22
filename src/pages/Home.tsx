@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion"
 import { Youtube, Github, Linkedin, PersonArmsUp, GenderMale, GeoAlt, Translate, Code, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
 import { Ruler, Atom, Brain, Volleyball, GraduationCap, Clapperboard, FileCode, Cylinder, BookText } from 'lucide-react';
+import DividedBanner from "@/components/DividedBanner";
 
 const Home = () => {
 
@@ -32,7 +33,7 @@ const Home = () => {
     { label: "Favorite Music Genre", values: ["Yes"], icon: <MusicNote />, percentage: 100 },
     { label: "Favorite Instruments", values: ["Hurdy-Gurdy", "Handpan", "Kalimba", "Piano"], icon: <MusicNote />, percentage: 100 },
     { label: "Favorite Games", values: ["The Legend of Zelda: Breath of the Wild", "Red Dead Redemption 2", "Rocket League", "Mario Kart Wii", "PokéPark", "Pokemon Black and White"], icon: <Controller />, percentage: 100 },
-    { label: "Favorite Book", values: ["Surely You're Joking, Mr. Feynman!"], icon: <BookText />, percentage: 100 },
+    { label: "Favorite Books", values: ["Surely You're Joking, Mr. Feynman!", "The Alchemist"], icon: <BookText />, percentage: 100 },
     { label: "Favorite Movies", values: ["Cars", "Wreck it Ralph", "Real Steel", "The Guilty (2018)"], icon: <Clapperboard />, percentage: 100 },
     { label: "Favorite Subjects", values: ["(Theoretical) Physics", "Film & Color", "Philosophy", "Technology"], icon: <Atom />, percentage: 100 },
   ];
@@ -79,7 +80,7 @@ const Home = () => {
 
                   <Chakra.Stack gap={2} flexDirection={{ base: "column", xs: "row" }} w={"100%"}>
                     <Avatar
-                      src="public/LOGO.png"
+                      src="/LOGO.png"
                       name="MyPing0"
                       size="2xl"
                       bg="transparent"
@@ -281,6 +282,20 @@ const Home = () => {
             ))}
           </Chakra.SimpleGrid>
         </Chakra.Box>
+
+        <DividedBanner
+          heading="Personal Interests"
+          slantSize="45px"
+          backgrounds={[
+            "src/assets/mariokart8.jpg",
+            "src/assets/mariokart8.jpg",
+            "src/assets/mariobros.jpg",
+            "src/assets/nintendoswitchsports.jpg",
+            "src/assets/nintendoswitchsports.jpg",
+          ]}
+          bgColor="rgb(187, 255, 253)"
+          shadow={"lg"}
+        />
 
       </Chakra.VStack>
     </Chakra.Box>

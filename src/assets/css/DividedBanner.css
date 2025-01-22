@@ -1,0 +1,38 @@
+.divided-banner {
+    --s: ;
+    /* control the slanted part */
+    display: grid;
+    height: 250px;
+    gap: 10px;
+    grid-auto-flow: column;
+    place-items: center;
+    overflow: hidden;
+}
+
+.banner-image {
+    width: 0;
+    min-width: calc(100% + var(--s));
+    height: 0;
+    min-height: 100%;
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(var(--s) 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%);
+    cursor: pointer;
+    transition: .5s;
+}
+
+.banner-image:hover {
+    width: 5vw;
+}
+
+.banner-image.first {
+    min-width: calc(100% + calc(var(--s) / 2));
+    place-self: start;
+    clip-path: polygon(0 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%);
+}
+
+.banner-image.last {
+    min-width: calc(100% + calc(var(--s) / 2));
+    place-self: end;
+    clip-path: polygon(100% 0, var(--s) 0, 0 100%, 100% 100%);
+}

@@ -28,13 +28,13 @@ const Header: React.FC = () => (
         </Collapsible.Root>
 
         <HStack gap={4} display={{ base: "none", sm: "flex" }}>
-          <Link href="/" display="flex" alignItems="center" gap={1} color="gray.700" _hover={{ color: 'black' }}>
+          <Link href="/" display="flex" alignItems="center" gap={1} color="gray.700" _hover={{ color: 'black' }} textDecoration={"none"} outline={"none"}>
             <Home /> Home
           </Link>
-          <Link href="/projects" display="flex" alignItems="center" gap={1} color="gray.700" _hover={{ color: 'black' }}>
+          <Link href="/projects" display="flex" alignItems="center" gap={1} color="gray.700" _hover={{ color: 'black' }} textDecoration={"none"} outline={"none"}>
             <Folder /> Projects
           </Link>
-          <Link href="/blog" display="flex" alignItems="center" gap={1} color="gray.700" _hover={{ color: 'black' }}>
+          <Link href="/blog" display="flex" alignItems="center" gap={1} color="gray.700" _hover={{ color: 'black' }} textDecoration={"none"} outline={"none"}>
             <PenTool /> Blog
           </Link>
         </HStack>
