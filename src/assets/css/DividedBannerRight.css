@@ -1,4 +1,4 @@
-.divided-banner {
+.divided-banner-right {
     --s: ;
     /* control the slanted part */
     display: grid;
@@ -9,30 +9,31 @@
     overflow: hidden;
 }
 
-.banner-image {
+.banner-image-right {
     width: 0;
     min-width: calc(100% + var(--s));
     height: 0;
     min-height: 100%;
     background-size: cover;
     background-position: center;
-    clip-path: polygon(var(--s) 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%);
+    clip-path: polygon(0 0, calc(100% - var(--s)) 0, 100% 100%, var(--s) 100%);
     cursor: pointer;
     transition: .5s;
 }
 
-.banner-image:hover {
+.banner-image-right:hover,
+.banner-image-right:focus {
     width: 5vw;
 }
 
-.banner-image.first {
+.banner-image-right.first {
     min-width: calc(100% + calc(var(--s) / 2));
     place-self: start;
-    clip-path: polygon(0 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%);
+    clip-path: polygon(0 0, calc(100% - var(--s)) 0, 100% 100%, 0 100%);
 }
 
-.banner-image.last {
+.banner-image-right.last {
     min-width: calc(100% + calc(var(--s) / 2));
     place-self: end;
-    clip-path: polygon(100% 0, var(--s) 0, 0 100%, 100% 100%);
+    clip-path: polygon(100% 0, 0 0, var(--s) 100%, 100% 100%);
 }

@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/accordion"
 import { Youtube, Github, Linkedin, PersonArmsUp, GenderMale, GeoAlt, Translate, Code, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
 import { Ruler, Atom, Brain, Volleyball, GraduationCap, Clapperboard, FileCode, Cylinder, BookText } from 'lucide-react';
-import DividedBanner from "@/components/DividedBanner";
+import DividedBannerLeft from "@/components/DividedBannerLeft";
+import DividedBannerRight from "@/components/DividedBannerRight";
+
 
 const Home = () => {
 
@@ -210,92 +212,52 @@ const Home = () => {
           </Chakra.VStack>
         </Chakra.Box>
 
-        <Chakra.Separator size="sm" />
-
         {/* Favorites Section */}
-        <Chakra.Box as="section" py={10} px={6} id="favorites">
-          <Chakra.Heading as="h2" size="lg" textAlign="center" color="gray.800" mb={6}>
-            Favorites
-          </Chakra.Heading>
-          <Chakra.SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
-            {favorites.map((favorite, index) => (
-              <Chakra.Box
-                key={index}
-                bg="white"
-                border="1px solid"
-                borderColor="gray.300"
-                borderRadius="sm"
-                overflow="hidden"
-                transition="transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out"
-                _hover={{
-                  boxShadow: "md",
-                  transform: "translateY(-2px)",
-                }}
-              >
-                {/* Card Header */}
-                <Chakra.Flex
-                  align="center"
-                  py={3}
-                  px={4}
-                  borderBottom="1px solid"
-                  borderColor="gray.200"
-                  bg="cyan.50"
-                >
-                  <Chakra.Box
-                    p={2}
-                    bg="cyan.100"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    boxSize={10}
-                    fontSize="lg"
-                    color="cyan.500"
-                    borderRadius={"full"}
-                  >
-                    {favorite.icon}
-                  </Chakra.Box>
-                  <Chakra.Text
-                    fontWeight="semibold"
-                    fontSize="md"
-                    color="gray.700"
-                    ml={4}
-                  >
-                    {favorite.label}
-                  </Chakra.Text>
-                </Chakra.Flex>
 
-                {/* Card Content */}
-                <Chakra.Box px={4} py={3} h="140px" overflowY="auto">
-                  <Chakra.List.Root gap={1} pl={5}>
-                    {favorite.values.map((value, i) => (
-                      <Chakra.ListItem
-                        key={i}
-                        fontSize="sm"
-                        color="gray.600"
-                      >
-                        {value}
-                      </Chakra.ListItem>
-                    ))}
-                  </Chakra.List.Root>
-                </Chakra.Box>
-              </Chakra.Box>
-            ))}
-          </Chakra.SimpleGrid>
-        </Chakra.Box>
+        <Chakra.VStack gap={4} align="stretch">
+          <DividedBannerLeft
+            heading="Favorite Games"
+            slantSize="45px"
+            backgrounds={[
+              "src/assets/mariokart8.jpg",
+              "src/assets/botw.jpg",
+              "src/assets/mariobros.jpg",
+              "src/assets/readdeadcover.jpg",
+              "src/assets/pokemonblackandwhite.jpg",
+            ]}
+            bgColor="rgb(187, 255, 253)"
+            shadow={"lg"}
+          />
 
-        <DividedBanner
-          heading="Personal Interests"
-          slantSize="45px"
-          backgrounds={[
-            "src/assets/mariokart8.jpg",
-            "src/assets/mariokart8.jpg",
-            "src/assets/mariobros.jpg",
-            "src/assets/nintendoswitchsports.jpg",
-            "src/assets/nintendoswitchsports.jpg",
-          ]}
-          bgColor="rgb(187, 255, 253)"
-          shadow={"lg"}
-        />
+          <DividedBannerRight
+            heading="Favorite Colors"
+            slantSize="45px"
+            backgrounds={[
+              "src/assets/mariokart8.jpg",
+              "src/assets/botw.jpg",
+              "src/assets/mariobros.jpg",
+              "src/assets/readdeadcover.jpg",
+              "src/assets/pokemonblackandwhite.jpg",
+            ]}
+            imageSide="right"
+            bgColor="rgb(187, 255, 253)"
+            shadow={"lg"}
+          />
+
+          <DividedBannerLeft
+            heading="Favorite Foods"
+            slantSize="45px"
+            backgrounds={[
+              "src/assets/mariokart8.jpg",
+              "src/assets/botw.jpg",
+              "src/assets/mariobros.jpg",
+              "src/assets/readdeadcover.jpg",
+              "src/assets/pokemonblackandwhite.jpg",
+            ]}
+            bgColor="rgb(187, 255, 253)"
+            shadow={"lg"}
+          />
+        </Chakra.VStack>
 
       </Chakra.VStack>
     </Chakra.Box>
