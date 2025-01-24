@@ -190,7 +190,6 @@ const Home = () => {
                       bg="cyan.100"
                       h="8px"
                       w="100%"
-                      rounded="full"
                       overflow="hidden"
                       position="relative"
                     >
@@ -198,7 +197,6 @@ const Home = () => {
                         bg="cyan.500"
                         h="100%"
                         w={`${stat.percentage}%`}
-                        rounded="full"
                         transition="width 0.3s ease-in-out"
                       />
                     </Chakra.Flex>
@@ -217,7 +215,7 @@ const Home = () => {
         <Chakra.VStack gap={4} align="stretch">
           <DividedBannerLeft
             heading="Favorite Games"
-            slantSize="45px"
+            slantAmount="45px"
             backgrounds={[
               "src/assets/mariokart8.jpg",
               "src/assets/botw.jpg",
@@ -227,11 +225,12 @@ const Home = () => {
             ]}
             bgColor="rgb(187, 255, 253)"
             shadow={"lg"}
+            imageSide="left"
           />
 
           <DividedBannerRight
             heading="Favorite Colors"
-            slantSize="45px"
+            slantAmount="45px"
             backgrounds={[
               "src/assets/mariokart8.jpg",
               "src/assets/botw.jpg",
@@ -240,13 +239,13 @@ const Home = () => {
               "src/assets/pokemonblackandwhite.jpg",
             ]}
             imageSide="right"
-            bgColor="rgb(187, 255, 253)"
+            bgColor="rgb(194, 255, 187)"
             shadow={"lg"}
           />
 
           <DividedBannerLeft
             heading="Favorite Foods"
-            slantSize="45px"
+            slantAmount="45px"
             backgrounds={[
               "src/assets/mariokart8.jpg",
               "src/assets/botw.jpg",
@@ -254,7 +253,7 @@ const Home = () => {
               "src/assets/readdeadcover.jpg",
               "src/assets/pokemonblackandwhite.jpg",
             ]}
-            bgColor="rgb(187, 255, 253)"
+            bgColor="rgb(218, 187, 255)"
             shadow={"lg"}
           />
         </Chakra.VStack>
