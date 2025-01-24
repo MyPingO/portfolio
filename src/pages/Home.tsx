@@ -1,16 +1,9 @@
 import * as Chakra from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
 import { Tag } from "@/components/ui/tag";
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-  AccordionRoot,
-} from "@/components/ui/accordion"
-import { Youtube, Github, Linkedin, PersonArmsUp, GenderMale, GeoAlt, Translate, Code, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
+import { Youtube, Github, Linkedin, PersonArmsUp, Translate, Code, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
 import { Ruler, Atom, Brain, Volleyball, GraduationCap, Clapperboard, FileCode, Cylinder, BookText } from 'lucide-react';
-import DividedBannerLeft from "@/components/DividedBannerLeft";
-import DividedBannerRight from "@/components/DividedBannerRight";
+import { DividedBanner } from "@/components/DividedBanner";
 
 
 const Home = () => {
@@ -180,7 +173,7 @@ const Home = () => {
                         </Chakra.Text>
                       </Chakra.HStack>
                       {/* Value */}
-                      <Chakra.Text fontSize="sm" color="gray.600" alignSelf={"center"}>
+                      <Chakra.Text fontSize="sm" color="gray.600" textAlign={"end"}>
                         {stat.value}
                       </Chakra.Text>
                     </Chakra.HStack>
@@ -211,27 +204,12 @@ const Home = () => {
         </Chakra.Box>
 
         {/* Favorites Section */}
-
-        <Chakra.VStack gap={4} align="stretch">
-          <DividedBannerLeft
+        <Chakra.VStack gap={8} align="stretch">
+          <DividedBanner
             heading="Favorite Games"
             slantAmount="45px"
-            backgrounds={[
-              "src/assets/mariokart8.jpg",
-              "src/assets/botw.jpg",
-              "src/assets/mariobros.jpg",
-              "src/assets/readdeadcover.jpg",
-              "src/assets/pokemonblackandwhite.jpg",
-            ]}
-            bgColor="rgb(187, 255, 253)"
-            shadow={"lg"}
-            imageSide="left"
-          />
-
-          <DividedBannerRight
-            heading="Favorite Colors"
-            slantAmount="45px"
-            backgrounds={[
+            slantDirection="right"
+            images={[
               "src/assets/mariokart8.jpg",
               "src/assets/botw.jpg",
               "src/assets/mariobros.jpg",
@@ -239,22 +217,35 @@ const Home = () => {
               "src/assets/pokemonblackandwhite.jpg",
             ]}
             imageSide="right"
-            bgColor="rgb(194, 255, 187)"
-            shadow={"lg"}
+            bgColor="rgb(255, 187, 187)"
           />
-
-          <DividedBannerLeft
-            heading="Favorite Foods"
-            slantAmount="45px"
-            backgrounds={[
+          <DividedBanner
+            heading="Favorite Games"
+            slantAmount="0px"
+            slantDirection="right"
+            images={[
               "src/assets/mariokart8.jpg",
               "src/assets/botw.jpg",
               "src/assets/mariobros.jpg",
               "src/assets/readdeadcover.jpg",
               "src/assets/pokemonblackandwhite.jpg",
             ]}
-            bgColor="rgb(218, 187, 255)"
-            shadow={"lg"}
+            imageSide="right"
+            bgColor="rgb(206, 255, 187)"
+          />
+          <DividedBanner
+            heading="Favorite Games"
+            slantAmount="45px"
+            slantDirection="left"
+            images={[
+              "src/assets/mariokart8.jpg",
+              "src/assets/botw.jpg",
+              "src/assets/mariobros.jpg",
+              "src/assets/readdeadcover.jpg",
+              "src/assets/pokemonblackandwhite.jpg",
+            ]}
+            imageSide="left"
+            bgColor="rgb(187, 246, 255)"
           />
         </Chakra.VStack>
 
