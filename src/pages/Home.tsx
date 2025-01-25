@@ -152,7 +152,7 @@ const Home = () => {
 
         {/* Quick Stats Section */}
         <Chakra.Box as="section" py={10} px={6} id="stats">
-          <Chakra.Heading as="h2" size="lg" textAlign="center" color="gray.800" mb={6}>
+          <Chakra.Heading size="4xl" textAlign="center" color="gray.800" mb={6}>
             Quick Stats
           </Chakra.Heading>
           <Chakra.VStack gap={4} align="stretch">
@@ -206,46 +206,56 @@ const Home = () => {
         {/* Favorites Section */}
         <Chakra.VStack gap={8} align="stretch">
           <DividedBanner
-            heading="Favorite Games"
+            heading="Favorite Colors"
             slantAmount="45px"
             slantDirection="right"
             images={[
-              "src/assets/mariokart8.jpg",
-              "src/assets/botw.jpg",
-              "src/assets/mariobros.jpg",
-              "src/assets/readdeadcover.jpg",
-              "src/assets/pokemonblackandwhite.jpg",
+              "src/assets/cyan.jpg",
+              "src/assets/white.jpg",
+              "src/assets/grey.jpg",
+              "src/assets/black.jpg",
             ]}
             imageSide="right"
-            bgColor="rgb(255, 187, 187)"
+            bgColor="rgb(237, 254, 255)"
           />
           <DividedBanner
-            heading="Favorite Games"
-            slantAmount="0px"
-            slantDirection="right"
-            images={[
-              "src/assets/mariokart8.jpg",
-              "src/assets/botw.jpg",
-              "src/assets/mariobros.jpg",
-              "src/assets/readdeadcover.jpg",
-              "src/assets/pokemonblackandwhite.jpg",
-            ]}
-            imageSide="right"
-            bgColor="rgb(206, 255, 187)"
-          />
-          <DividedBanner
-            heading="Favorite Games"
+            heading="Favorite Anime"
             slantAmount="45px"
             slantDirection="left"
             images={[
-              "src/assets/mariokart8.jpg",
-              "src/assets/botw.jpg",
-              "src/assets/mariobros.jpg",
-              "src/assets/readdeadcover.jpg",
-              "src/assets/pokemonblackandwhite.jpg",
+              "src/assets/kiritoSAO.jpg",
+              "src/assets/lightyagami.png",
+              "src/assets/narutowallpaper.jpg",
+              "src/assets/steinsgatewallpaper.jpg",
             ]}
             imageSide="left"
-            bgColor="rgb(187, 246, 255)"
+            bgColor="rgb(255, 221, 187)"
+          />
+          <DividedBanner
+            heading="Favorite Games"
+            slantAmount="45px"
+            slantDirection="right"
+            images={[
+              "src/assets/botw.jpg",
+              "src/assets/readdeadcover.jpg",
+              "src/assets/pokemonblackandwhite.jpg",
+              "src/assets/mariokart8.jpg",
+            ]}
+            imageSide="right"
+            bgColor="rgb(187, 254, 255)"
+          />
+          <DividedBanner
+            heading="Favorite Books"
+            slantAmount="0px"
+            slantDirection="left"
+            images={[
+              "src/assets/surelyyourejokingmrfeynman.jpg",
+              "src/assets/thealchemist.jpg",
+              "src/assets/theoutsiders.jpg"
+            ]}
+            imageSide="left"
+            expandDivisions={false}
+            bgColor="rgb(255, 187, 187)"
           />
         </Chakra.VStack>
 

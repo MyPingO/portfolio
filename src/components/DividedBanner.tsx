@@ -10,6 +10,7 @@ interface DividedBannerProps extends BoxProps {
     bgColor: string;
     heading?: string;
     imageSide?: "left" | "right";
+    expandDivisions?: boolean;
 }
 
 export const DividedBanner: React.FC<DividedBannerProps> = ({
@@ -19,6 +20,7 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
     bgColor = "white",
     heading,
     imageSide = "left",
+    expandDivisions = true,
     ...props
 }) => {
     const isXSmallScreen = useMedia("(max-width: 600px)");
@@ -26,7 +28,8 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
     const isMediumScreen = useMedia("(max-width: 800px)");
     const isLargeScreen = useMedia("(max-width: 900px)");
 
-    const hoverWidth = isXSmallScreen ? "25vw"
+    const hoverWidth = !expandDivisions ? "calc(100% + var(--slantAmount))%" :
+        isXSmallScreen ? "25vw"
             : isSmallScreen ? "20vw"
                 : isMediumScreen ? "20vw"
                     : isLargeScreen ? "15vw" : "7vw";
@@ -44,6 +47,8 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
 
     const gradientDirection = imageSide === "left" ? "to left" : "to right";
 
+    const headingAlignment = imageSide === "left" ? "right" : "left";
+
     return (
         <Box
             bg={`linear-gradient(${gradientDirection}, ${bgColor} 10%, #fff 50%, ${bgColor})`}
@@ -52,9 +57,9 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
             boxShadow="0px 15px 10px 0px rgba(0, 0, 0, 0.2)"
         >
             {isXSmallScreen && heading && (
-                <Center m={4}>
-                    <Heading size="2xl">{heading}</Heading>
-                </Center>
+
+                <Heading size="2xl" p={4} textAlign={headingAlignment}>{heading}</Heading>
+
             )}
             <Box
                 className="divided-banner"

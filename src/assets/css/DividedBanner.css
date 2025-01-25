@@ -19,7 +19,7 @@
     background-position: center;
     clip-path: polygon(0 0, calc(100% - var(--slantAmount)) 0, 100% 100%, var(--slantAmount) 100%);
     cursor: pointer;
-    transition: .5s;
+    transition: width .5s;
 }
 
 .banner-image.right {
@@ -31,7 +31,7 @@
     background-position: center;
     clip-path: polygon(var(--slantAmount) 0, 100% 0, calc(100% - var(--slantAmount)) 100%, 0 100%);
     cursor: pointer;
-    transition: .5s;
+    transition: width .5s;
 }
 
 .banner-image:hover,
@@ -48,7 +48,7 @@
 .banner-image.right.last {
     min-width: calc(100% + calc(var(--slantAmount) / 2));
     place-self: end;
-    clip-path: polygon(100% 0, var(--slantAmount) 0, 0 100%, 100% 100%);
+    clip-path: polygon(var(--slantAmount) 0, 100% 0 , 100% 100%, 0 100%);
 }
 
 .banner-image.left.first {
@@ -60,5 +60,5 @@
 .banner-image.left.last {
     min-width: calc(100% + calc(var(--slantAmount) / 2));
     place-self: end;
-    clip-path: polygon(100% 0, 0 0, var(--slantAmount) 100%, 100% 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, var(--slantAmount) 100%);
 }
