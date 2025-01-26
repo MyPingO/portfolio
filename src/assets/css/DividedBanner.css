@@ -1,9 +1,61 @@
+/* .divided-banner {
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-image {
+    flex: 0 0 1;
+    margin-left: calc(var(--slantAmount) * -0.5);
+    width: 100%;
+    transition: width 0.4s ease;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+
+.banner-image:first-of-type {
+    margin-left: 0;
+}
+
+.banner-image:hover,
+.banner-image:focus {
+    width: calc(200% + var(--hoverWidth));
+}
+
+.banner-image.left {
+    clip-path: polygon(0 0, calc(100% - var(--slantAmount)) 0, 100% 100%, var(--slantAmount) 100%);
+}
+
+.banner-image.right {
+    clip-path: polygon(var(--slantAmount) 0, 100% 0, calc(100% - var(--slantAmount)) 100%, 0 100%);
+}
+
+.banner-image.right.first {
+    clip-path: polygon(0 0, 100% 0, calc(100% - var(--slantAmount)) 100%, 0 100%);
+}
+
+.banner-image.left.first {
+    clip-path: polygon(0 0, calc(100% - var(--slantAmount)) 0, 100% 100%, 0 100%);
+}
+
+.banner-image.right.last {
+    clip-path: polygon(var(--slantAmount) 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.banner-image.left.last {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, var(--slantAmount) 100%);
+} */
+
+
 .divided-banner {
     --slantAmount: ;
     --hoverWidth: ;
 
     display: grid;
-    height: 250px;
     gap: 10px;
     grid-auto-flow: column;
     place-items: center;

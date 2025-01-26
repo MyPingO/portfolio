@@ -1,26 +1,42 @@
-import React from "react";
-import { Box, BoxProps, Center, Heading } from "@chakra-ui/react";
+import React, { ReactNode } from "react";
+import { Box, BoxProps, Heading } from "@chakra-ui/react";
 import { useMedia } from "react-use";
 import "../assets/css/DividedBanner.css";
 
 interface DividedBannerProps extends BoxProps {
+    /** How much each divider is slanted (px, %, vw, etc). Defaults to `'0px'` */
     slantAmount?: string;
-    slantDirection: "left" | "right";
+    /** Which direction the dividers are slanted. Defaults to `'left'` */
+    slantDirection?: "left" | "right";
+    /** Whether to flip the slant direction after the heading (Ex: `\ \ HEADING / /` ). Defaults to `false` */
+    flipSlantAfterHeading?: boolean;
+    /** Array of image URLs to be used in the banner */
     images: string[];
+    /** Background color of the banner. Defaults to `'white'` */
     bgColor: string;
-    heading?: string;
-    imageSide?: "left" | "right";
-    expandDivisions?: boolean;
+    /** Heading to be displayed in the banner. Can be some text, image, icon, React Component, etc. Optional. */
+    heading?: ReactNode;
+    /** Whether to expand the dividers on hover. Defaults to `true` */
+    expandOnHover?: boolean;
+    /** Height of the banner. Defaults to `'250px'` */
+    bannerHeight?: string;
+    /** Placement of the heading in the banner. Can be an index or  `'start'`, `'center'`, or `'end'`. Defaults to `0` */
+    headingPlacement?: number | "start" | "center" | "end";
+    /** Whether to show a pre-made shadow on the banner. Defaults to `true`. Set to `false` if you want to use your own box shadow. */
+    useBoxShadow?: boolean;
 }
 
 export const DividedBanner: React.FC<DividedBannerProps> = ({
     slantDirection = "left",
-    slantAmount = "50px",
-    images: backgrounds = [],
+    slantAmount = "0px",
+    flipSlantAfterHeading = false,
+    images = [],
     bgColor = "white",
-    heading,
-    imageSide = "left",
-    expandDivisions = true,
+    heading = null,
+    expandOnHover = true,
+    bannerHeight = "250px",
+    headingPlacement = 0,
+    useBoxShadow = true,
     ...props
 }) => {
     const isXSmallScreen = useMedia("(max-width: 600px)");
@@ -28,33 +44,37 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
     const isMediumScreen = useMedia("(max-width: 800px)");
     const isLargeScreen = useMedia("(max-width: 900px)");
 
-    const hoverWidth = !expandDivisions ? "calc(100% + var(--slantAmount))%" :
-        isXSmallScreen ? "25vw"
-            : isSmallScreen ? "20vw"
-                : isMediumScreen ? "20vw"
-                    : isLargeScreen ? "15vw" : "7vw";
-
-    if (backgrounds.length === 1) {
+    
+    const hoverWidth = !expandOnHover ? "calc(100% + var(--slantAmount))%" :
+    isXSmallScreen ? "25vw"
+    : isSmallScreen ? "20vw"
+    : isMediumScreen ? "20vw"
+    : isLargeScreen ? "15vw" : "7vw";
+    
+    const maxImages = isXSmallScreen ? 2
+    : isSmallScreen ? 2
+    : isMediumScreen ? 3
+    : isLargeScreen ? 4
+    : images.length;
+    const sliced = images.slice(0, maxImages);
+    
+    if (isXSmallScreen && sliced.length == 1) {
         slantAmount = "0px";
     }
 
-    const maxBackgrounds = isXSmallScreen ? 3
-        : isSmallScreen ? 2
-            : isMediumScreen ? 3
-                : isLargeScreen ? 4
-                    : backgrounds.length;
-    const sliced = backgrounds.slice(0, maxBackgrounds);
+    headingPlacement = getSafeHeadingPlacement(headingPlacement, sliced.length);
+    const headingAlignment = slantDirection;
+    console.log(headingPlacement);
 
-    const gradientDirection = imageSide === "left" ? "to left" : "to right";
+    const gradientDirection = headingPlacement === 0 ? "to left" : "to right";
 
-    const headingAlignment = imageSide === "left" ? "right" : "left";
 
     return (
         <Box
             bg={`linear-gradient(${gradientDirection}, ${bgColor} 10%, #fff 50%, ${bgColor})`}
             {...props}
             mx="4"
-            boxShadow="0px 15px 10px 0px rgba(0, 0, 0, 0.2)"
+            boxShadow = {useBoxShadow == true ? "0px 15px 10px 0px rgba(0, 0, 0, 0.2)": "none"}
         >
             {isXSmallScreen && heading && (
 
@@ -65,31 +85,56 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
                 className="divided-banner"
                 style={{
                     "--slantAmount": slantAmount,
-                    "--hoverWidth": hoverWidth
+                    "--hoverWidth": hoverWidth,
+                    "height": bannerHeight,
                 } as React.CSSProperties}
             >
-                {!isXSmallScreen && heading && imageSide === "right" && (
-                    <Heading size="2xl">{heading}</Heading>
-                )}
-                {sliced.map((bg, i) => {
-                    const isFirst = i === 0;
-                    const isLast = i === sliced.length - 1;
-                    const firstClass = (isXSmallScreen || imageSide === "left") && isFirst ? "first" : "";
-                    const lastClass = (isXSmallScreen || imageSide === "right") && isLast ? "last" : "";
+                {sliced.map((bg, index) => {
+                    const isFirst = index === 0;
+                    const isLast = index === sliced.length - 1;
+                    const firstClass = (isXSmallScreen || index < headingPlacement) && isFirst ? "first" : "";
+                    const lastClass = (isXSmallScreen || index >= headingPlacement) && isLast ? "last" : "";
+                    slantDirection = flipSlantAfterHeading && index === headingPlacement ? (slantDirection === "left" ? "right" : "left") : slantDirection;
 
                     return (
-                        <div
-                            key={i}
-                            className={`banner-image ${slantDirection} ${firstClass} ${lastClass}`}
-                            style={{ backgroundImage: `url(${bg})` }}
-                            tabIndex={0}
-                        />
+                        <React.Fragment key={index}>
+                            {!isXSmallScreen && heading && index === headingPlacement && (
+                                <Heading size="2xl" p={4} textAlign={headingAlignment}>
+                                    {heading}
+                                </Heading>
+                            )}
+                            <div
+                                className={`banner-image ${slantDirection} ${firstClass} ${lastClass}`}
+                                style={{ backgroundImage: `url(${bg})` }}
+                                tabIndex={0}
+                            />
+                        </React.Fragment>
                     );
                 })}
-                {!isXSmallScreen && heading && imageSide === "left" && (
-                    <Heading size="2xl">{heading}</Heading>
+
+                {!isXSmallScreen && heading && headingPlacement >= sliced.length && (
+                    <Heading size="2xl" p={4} textAlign={headingAlignment}>
+                        {heading}
+                    </Heading>
                 )}
             </Box>
         </Box>
     );
 };
+
+const getSafeHeadingPlacement = (headingPlacement: number | string, maxImages: number): number => {
+
+    if (typeof headingPlacement === "string") {
+        switch (headingPlacement) {
+            case "start":
+                return 0;
+            case "center":
+                return Math.floor(maxImages / 2);
+            case "end":
+                return maxImages;
+            default:
+                return 0;
+        }
+    }
+    return Math.max(0, Math.min(headingPlacement, maxImages));
+}

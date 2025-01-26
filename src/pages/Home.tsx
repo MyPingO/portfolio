@@ -2,7 +2,7 @@ import * as Chakra from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
 import { Tag } from "@/components/ui/tag";
 import { Youtube, Github, Linkedin, PersonArmsUp, Translate, Code, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
-import { Ruler, Atom, Brain, Volleyball, GraduationCap, Clapperboard, FileCode, Cylinder, BookText } from 'lucide-react';
+import { Ruler, Atom, Brain, Volleyball, GraduationCap, Clapperboard, FileCode, Cylinder, BookText, SquareMousePointer } from 'lucide-react';
 import { DividedBanner } from "@/components/DividedBanner";
 
 
@@ -206,7 +206,11 @@ const Home = () => {
         {/* Favorites Section */}
         <Chakra.VStack gap={8} align="stretch">
           <DividedBanner
-            heading="Favorite Colors"
+            heading={
+              <Chakra.Box display={"flex"} alignItems={"center"} gap={2}>
+                Favorite Colors <SquareMousePointer strokeWidth="2px" />
+              </Chakra.Box>
+            }
             slantAmount="45px"
             slantDirection="right"
             images={[
@@ -215,21 +219,24 @@ const Home = () => {
               "src/assets/grey.jpg",
               "src/assets/black.jpg",
             ]}
-            imageSide="right"
             bgColor="rgb(237, 254, 255)"
+            bannerHeight="150px"
           />
           <DividedBanner
             heading="Favorite Anime"
             slantAmount="45px"
             slantDirection="left"
+            headingPlacement={"end"}
+            flipSlantAfterHeading={true}
             images={[
               "src/assets/kiritoSAO.jpg",
               "src/assets/lightyagami.png",
               "src/assets/narutowallpaper.jpg",
               "src/assets/steinsgatewallpaper.jpg",
+              "src/assets/frierenwallpaper.jpg"
             ]}
-            imageSide="left"
             bgColor="rgb(255, 221, 187)"
+            bannerHeight="225px"
           />
           <DividedBanner
             heading="Favorite Games"
@@ -241,21 +248,21 @@ const Home = () => {
               "src/assets/pokemonblackandwhite.jpg",
               "src/assets/mariokart8.jpg",
             ]}
-            imageSide="right"
             bgColor="rgb(187, 254, 255)"
+            bannerHeight="255px"
           />
           <DividedBanner
             heading="Favorite Books"
             slantAmount="0px"
-            slantDirection="left"
+            headingPlacement={"end"}
             images={[
               "src/assets/surelyyourejokingmrfeynman.jpg",
               "src/assets/thealchemist.jpg",
               "src/assets/theoutsiders.jpg"
             ]}
-            imageSide="left"
-            expandDivisions={false}
+            expandOnHover={false}
             bgColor="rgb(255, 187, 187)"
+            bannerHeight="300px"
           />
         </Chakra.VStack>
 
