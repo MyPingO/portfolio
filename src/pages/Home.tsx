@@ -12,8 +12,8 @@ const Home = () => {
     { label: "Age", value: "22 years old", icon: <PersonArmsUp />, percentage: 22 },
     { label: "Spoken Languages", value: "English, Russian", icon: <Translate />, percentage: 30 },
     { label: "Programming Languages", value: "8", icon: <Code />, percentage: 35 },
-    { label: "Lines of Code Written", value: "500,000+", icon: <FileCode strokeWidth={"1px"} />, percentage: 45 },
-    { label: "Anime Watched", value: "50+", icon: <Tv />, percentage: 60 },
+    { label: "Anime Watched", value: "50+", icon: <Tv />, percentage: 45 },
+    { label: "Lines of Code Written", value: "500,000+", icon: <FileCode strokeWidth={"1px"} />, percentage: 60 },
     { label: "Height", value: "5'11 | 180.35 cm", icon: <Ruler strokeWidth={"1px"} />, percentage: 75 },
     { label: "Gaming Skill", value: "Semi-pro", icon: <Controller />, percentage: 90 },
     { label: "Cups of Tea Consumed", value: <InfinityIcon size={"1.5rem"} />, icon: <CupHot />, percentage: 100 },
@@ -164,7 +164,7 @@ const Home = () => {
 
                     <Chakra.HStack justify={"space-between"} w={"100%"}>
                       <Chakra.HStack gap={3}>
-                        <Chakra.Box fontSize="xl" color="cyan.500" w={6} h={6} textAlign={"end"}>
+                        <Chakra.Box fontSize="xl" color="cyan.500" w={6} h={6} display="flex" alignItems="center" justifyContent="start">
                           {stat.icon}
                         </Chakra.Box>
                         {/* Label */}
@@ -207,10 +207,11 @@ const Home = () => {
         <Chakra.VStack gap={8} align="stretch">
           <DividedBanner
             heading={
-              <Chakra.Box display={"flex"} alignItems={"center"} gap={2}>
+              <Chakra.Box display={"flex"} alignItems={"center"} justifyContent={"center"} gap={2}>
                 Favorite Colors <SquareMousePointer strokeWidth="2px" />
               </Chakra.Box>
             }
+            headingWidth="2.75"
             slantAmount="45px"
             slantDirection="right"
             images={[
@@ -224,6 +225,7 @@ const Home = () => {
           />
           <DividedBanner
             heading="Favorite Anime"
+            headingWidth="1.75"
             slantAmount="45px"
             slantDirection="left"
             headingPlacement={"end"}
@@ -240,6 +242,7 @@ const Home = () => {
           />
           <DividedBanner
             heading="Favorite Games"
+            headingWidth="1.75"
             slantAmount="45px"
             slantDirection="right"
             images={[
@@ -253,13 +256,15 @@ const Home = () => {
           />
           <DividedBanner
             heading="Favorite Books"
-            slantAmount="0px"
             headingPlacement={"end"}
+            headingWidth="1.6"
+            slantAmount="0px"
             images={[
               "src/assets/surelyyourejokingmrfeynman.jpg",
               "src/assets/thealchemist.jpg",
               "src/assets/theoutsiders.jpg"
             ]}
+            imageFit="100% 100%"
             expandOnHover={false}
             bgColor="rgb(255, 187, 187)"
             bannerHeight="300px"

@@ -1,5 +1,7 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
+// npx @chakra-ui/cli typegen .\src\theme.ts
+
 const config = defineConfig({
     theme: {
         breakpoints: {
