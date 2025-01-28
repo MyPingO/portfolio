@@ -1,7 +1,11 @@
 import React, { ReactNode } from "react";
 import { Box, BoxProps, Heading } from "@chakra-ui/react";
-import { useMedia } from "react-use";
+import { useWindowSize } from "react-use";
 import "../assets/css/DividedBanner.css";
+
+interface ImageBreakpoints {
+    [key: number]: number;
+}
 
 interface DividedBannerProps extends BoxProps {
     /** How much each divider is slanted (px, %, vw, etc). Defaults to `'0px'` */
@@ -14,12 +18,26 @@ interface DividedBannerProps extends BoxProps {
     images: string[];
     /** How to fit the images in the banner. This sets the background-size property. Defaults to `'cover'` */
     imageFit?: string;
+    /** 
+     * Object of breakpoints for the number of images to display. Breakpoints are compared with the `<=` operator.
+     * 
+     * Defaults to: `{ 600: 2, 700: 2, 800: 3, 900: 4}`. For values above `900px`, all images are displayed.
+     * 
+     * The key is the maximum width of the screen in pixels and the value is the number of images to display.
+    */
+    imageBreakpoints?: ImageBreakpoints;
     /** Background color of the banner. Defaults to `'white'` */
     bgColor: string;
     /** Heading to be displayed in the banner. Can be some text, image, icon, React Component, etc. Optional. */
     heading?: ReactNode;
     /** Amount of width the heading takes up in the banner. Defaults to `'100%'` which takes up the same space as each image. */
     headingWidth?: string;
+    /** 
+     * The max-width of the viewport where the header moves on top of the images. Breakpoints are compared with the `<=` operator.
+     * 
+     * Defaults to the smallest value of the imageBreakpoints prop, which defaults to `600px`.
+    */
+    headingBreakpoint?: number;
     /** Whether to expand the dividers on hover. Defaults to `true` */
     expandOnHover?: boolean;
     /** Height of the banner. Defaults to `'250px'` */
@@ -36,33 +54,28 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
     flipSlantAfterHeading = false,
     images = [],
     imageFit = "cover",
-    bgColor = "white",
+    imageBreakpoints = { 600: 2, 700: 2, 800: 3, 900: 4 },
+    expandOnHover = true,
     heading = null,
     headingWidth = "auto",
-    expandOnHover = true,
+    headingBreakpoint = Math.min(...Object.keys(imageBreakpoints).map(Number)),
     bannerHeight = "250px",
     headingPlacement = 0,
+    bgColor = "white",
     useBoxShadow = true,
     ...props
 }) => {
-    const isXSmallScreen = useMedia("(max-width: 600px)");
-    const isSmallScreen = useMedia("(max-width: 700px)");
-    const isMediumScreen = useMedia("(max-width: 800px)");
-    const isLargeScreen = useMedia("(max-width: 900px)");
+    const windowSize = useWindowSize();
+    const sortedBreakpoints: [string, number][] = Object.entries(imageBreakpoints).sort((a, b) => Number(a[0]) - Number(b[0]));
+    const slicedImages = getMaxImages(sortedBreakpoints, windowSize.width, images);
+    const isSmallestBreakpoint = windowSize.width <= headingBreakpoint;
 
-    const maxImages = isXSmallScreen ? 2
-        : isSmallScreen ? 2
-            : isMediumScreen ? 3
-                : isLargeScreen ? 4
-                    : images.length;
-    const sliced = images.slice(0, maxImages);
-
-    if (isXSmallScreen && sliced.length == 1) {
+    if (isSmallestBreakpoint && slicedImages.length == 1) {
         slantAmount = "0px";
     }
 
-    headingPlacement = getSafeHeadingPlacement(headingPlacement, sliced.length);
-    const headingAlignment = isXSmallScreen ? slantDirection : "center";
+    headingPlacement = getSafeHeadingPlacement(headingPlacement, slicedImages.length);
+    const headingAlignment = isSmallestBreakpoint ? slantDirection : "center";
 
     const hoverWidth = !expandOnHover ? "1" : "1.75";
     const gradientDirection = headingPlacement === 0 ? "to left" : "to right";
@@ -74,7 +87,7 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
             mx="4"
             boxShadow={useBoxShadow == true ? "0px 15px 10px 0px rgba(0, 0, 0, 0.2)" : "none"}
         >
-            {isXSmallScreen && heading && (
+            {isSmallestBreakpoint && heading && (
                 <Heading size="2xl" p={4} textAlign={"center"}>{heading}</Heading>
             )}
             <Box
@@ -85,16 +98,16 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
                     "height": bannerHeight,
                 } as React.CSSProperties}
             >
-                {sliced.map((bg, index) => {
+                {slicedImages.map((bg, index) => {
                     const isFirst = index === 0;
-                    const isLast = index === sliced.length - 1;
-                    const firstClass = (isXSmallScreen || index < headingPlacement) && isFirst ? "first" : "";
-                    const lastClass = (isXSmallScreen || index >= headingPlacement) && isLast ? "last" : "";
+                    const isLast = index === slicedImages.length - 1;
+                    const firstClass = (isSmallestBreakpoint || index < headingPlacement) && isFirst ? "first" : "";
+                    const lastClass = (isSmallestBreakpoint || index >= headingPlacement) && isLast ? "last" : "";
                     slantDirection = flipSlantAfterHeading && index === headingPlacement ? (slantDirection === "left" ? "right" : "left") : slantDirection;
 
                     return (
                         <React.Fragment key={index}>
-                            {!isXSmallScreen && heading && index === headingPlacement && (
+                            {!isSmallestBreakpoint && heading && index === headingPlacement && (
                                 <BannerHeading
                                     heading={heading}
                                     headingAlignment={headingAlignment}
@@ -112,7 +125,7 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
                     );
                 })}
 
-                {!isXSmallScreen && heading && headingPlacement >= sliced.length && (
+                {!isSmallestBreakpoint && heading && headingPlacement >= slicedImages.length && (
                     <BannerHeading
                         heading={heading}
                         headingAlignment={headingAlignment}
@@ -125,6 +138,25 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
         </Box>
     );
 };
+
+const getMaxImages = (imageBreakpoints: ([string, number][]), maxWidth: number, images: string[]): string[] => {
+
+    if (maxWidth > Number(imageBreakpoints[imageBreakpoints.length - 1][0])) {
+        return images;
+    }
+
+    let maxImages = imageBreakpoints[imageBreakpoints.length - 1][1];
+
+    for (let i = 0; i < imageBreakpoints.length; i++) {
+        const [breakpoint, images] = imageBreakpoints[i];
+        if (maxWidth <= Number(breakpoint)) {
+            maxImages = images;
+            break;
+        }
+    }
+
+    return images.slice(0, maxImages);
+}
 
 const getSafeHeadingPlacement = (headingPlacement: number | string, maxImages: number): number => {
 

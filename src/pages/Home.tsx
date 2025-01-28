@@ -258,6 +258,7 @@ const Home = () => {
             heading="Favorite Books"
             headingPlacement={"end"}
             headingWidth="1.6"
+            headingBreakpoint={765}
             slantAmount="0px"
             images={[
               "src/assets/surelyyourejokingmrfeynman.jpg",
@@ -265,6 +266,7 @@ const Home = () => {
               "src/assets/theoutsiders.jpg"
             ]}
             imageFit="100% 100%"
+            imageBreakpoints={{ 600: 2, 765: 3, 900: 2 }}
             expandOnHover={false}
             bgColor="rgb(255, 187, 187)"
             bannerHeight="300px"
