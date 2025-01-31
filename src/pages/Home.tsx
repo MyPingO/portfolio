@@ -258,7 +258,7 @@ const Home = () => {
             heading="Favorite Books"
             headingPlacement={"end"}
             headingWidth="1.6"
-            headingBreakpoints={{650: ["end", "center"], 765: ["top", "center"]}}
+            headingBreakpoints={{325: ["top", "center", .1], 400: ["end", "center", .1], 500: ["top"], 550: ["end", "center", 1], 650: ["end"], 750: ["top"], 800: ["end", "center", 1.5], 850: ["end", "center", 1.75], 950: ["end", "center", 2]}}
             slantAmount="0px"
             images={[
               "src/assets/surelyyourejokingmrfeynman.jpg",
@@ -266,7 +266,7 @@ const Home = () => {
               "src/assets/theoutsiders.jpg"
             ]}
             imageFit="100% 100%"
-            imageBreakpoints={{ 650: 2, 765: 3, 900: 2 }}
+            imageBreakpoints={{ 400: 1, 500: 2, 550: 1, 650: 1, 750: 3, 850: 2, 950: 2 }}
             expandOnHover={false}
             bgColor="rgb(255, 187, 187)"
             bannerHeight="300px"

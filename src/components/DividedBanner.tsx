@@ -4,7 +4,7 @@ import { useWindowSize } from "react-use";
 import "../assets/css/DividedBanner.css";
 
 interface HeadingBreakpoints {
-    [key: number]: [number | "start" | "middle" | "end" | "top" | "bottom", string?];
+    [key: number]: [number | "start" | "middle" | "end" | "top" | "bottom", string?, number?];
 }
 
 interface ImageBreakpoints {
@@ -35,7 +35,7 @@ interface DividedBannerProps extends BoxProps {
     /** Heading to be displayed in the banner. Can be some text, image, icon, React Component, etc. Optional. */
     heading?: ReactNode;
     /** Amount of width the heading takes up in the banner relative to the images. Defaults to `'1'` which takes up the same space as each image. */
-    headingWidth?: string;
+    headingWidth?: number | string;
     /** Placement of the heading in the banner. Can be an index (0-indexed), `'start'`, `'middle'`, `'end'`, `'top'`, or `'bottom'`. Defaults to `0` */
     headingPlacement?: number | "start" | "middle" | "end" | "top" | "bottom";
     /** The `textAlign` value for the heading. Defaults to `'center'` */
@@ -51,7 +51,9 @@ interface DividedBannerProps extends BoxProps {
      * 
      * The value can be an index (0-indexed) or placement. Ex: `1` (placed after the first image), `'start'`, `'center'`, `'end'`, `'top'`, or `'bottom'`.
      * 
-     * An additional value for `textAlign` can be added after a comma. Ex: `{700: ['start', 'center'], 600: ['top', 'left']}`.
+     * An additional value for `textAlign` can be added after a comma. Ex: `{700: ['start', 'center'], 600: ['top', 'left']}`. Defaults to `'center'`.
+     * 
+     * An additional value for `headingWidth` can be added after a second comma. Ex: `{700: ['start', 'center', 2], 600: ['top', 'left', 1]}`. Defaults to `'1'`.
      */
     headingBreakpoints?: HeadingBreakpoints;
     /** Whether to expand the dividers on hover. Defaults to `true` */
@@ -71,7 +73,7 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
     imageBreakpoints = { 600: 2, 700: 2, 800: 3, 900: 4 },
     expandOnHover = true,
     heading = null,
-    headingWidth = "1",
+    headingWidth = 1,
     headingPlacement = 0,
     headingAlignment = "center",
     headingBreakpoints = (() => {
@@ -87,21 +89,18 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
     const sortedImageBreakpoints: [string, number][] = Object.entries(imageBreakpoints).sort((a, b) => Number(a[0]) - Number(b[0]));
     const slicedImages = images.slice(0, getValueAtCurrentBreakpoint(sortedImageBreakpoints, windowSize.width, images.length));
 
-    const sortedHeadingBreakpoints: [string, [number | string, string?]][] = Object.entries(headingBreakpoints).sort((a, b) => Number(a[0]) - Number(b[0]));
-    const filledHeadingBreakpoints: [string, [number, string]][] = sortedHeadingBreakpoints.map(([breakpoint, value]) => {
-        const [placement, alignment = headingAlignment] = value;
-        return [breakpoint, [getSafeHeadingPlacement(placement, slicedImages.length), alignment]];
+    const sortedHeadingBreakpoints: [string, [number | string, string?, string?]][] = Object.entries(headingBreakpoints).sort((a, b) => Number(a[0]) - Number(b[0]));
+    const safeHeadingBreakpoints: [string, [number, string, string | number]][] = sortedHeadingBreakpoints.map(([breakpoint, value]) => {
+        const [placement, alignment = headingAlignment, width = headingWidth] = value;
+        return [breakpoint, [getSafeHeadingPlacement(placement, slicedImages.length), alignment, width]];
     });
 
-    console.log("Before:", headingPlacement);
-
     headingPlacement = getSafeHeadingPlacement(headingPlacement, slicedImages.length);
-    const [breakpointHeadingPlacement, breakpointHeadingAlignment] = getValueAtCurrentBreakpoint(filledHeadingBreakpoints, windowSize.width, [headingPlacement, headingAlignment]);
+    const [breakpointHeadingPlacement, breakpointHeadingAlignment, breakpointHeadingWidth] = getValueAtCurrentBreakpoint(safeHeadingBreakpoints, windowSize.width, [headingPlacement, headingAlignment, headingWidth]);
     const isHeadingInBanner = breakpointHeadingPlacement >= 0 && breakpointHeadingPlacement <= slicedImages.length;
     const isHeadingOnTop = breakpointHeadingPlacement === -1;
     const isHeadingOnBottom = breakpointHeadingPlacement === slicedImages.length + 1;
 
-    console.log("After:", headingPlacement);
     if (isHeadingInBanner && slicedImages.length == 1) {
         slantAmount = "0px";
     }
@@ -117,7 +116,11 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
             boxShadow={useBoxShadow == true ? "0px 15px 10px 0px rgba(0, 0, 0, 0.2)" : "none"}
         >
             {isHeadingOnTop && heading && (
-                <Heading size="2xl" p={4} textAlign={breakpointHeadingAlignment}>{heading}</Heading>
+                <BannerHeading
+                    heading={heading}
+                    headingAlignment={breakpointHeadingAlignment}
+                    flex={breakpointHeadingWidth}
+                />
             )}
             <Box
                 className="divided-banner"
@@ -139,8 +142,8 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
                             {heading && index === breakpointHeadingPlacement && (
                                 <BannerHeading
                                     heading={heading}
-                                    headingAlignment={headingAlignment}
-                                    flex={headingWidth}
+                                    headingAlignment={breakpointHeadingAlignment}
+                                    flex={breakpointHeadingWidth}
                                 />
                             )}
                             <img
@@ -155,13 +158,17 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
                 {heading && breakpointHeadingPlacement == slicedImages.length && (
                     <BannerHeading
                         heading={heading}
-                        headingAlignment={headingAlignment}
-                        flex={headingWidth}
+                        headingAlignment={breakpointHeadingAlignment}
+                        flex={breakpointHeadingWidth}
                     />
                 )}
             </Box>
             {isHeadingOnBottom && heading && (
-                <Heading size="2xl" p={4} textAlign={breakpointHeadingAlignment}>{heading}</Heading>
+                <BannerHeading
+                heading={heading}
+                headingAlignment={breakpointHeadingAlignment}
+                flex={breakpointHeadingWidth}
+            />
             )}
         </Box>
     );
@@ -215,7 +222,7 @@ export const BannerHeading: React.FC<BannerHeadingProps> = ({
             size="2xl"
             p={4}
             textAlign={headingAlignment}
-            textWrap="nowrap"
+            textWrap="wrap"
             {...props}
         >
             {heading}
