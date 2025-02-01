@@ -180,6 +180,8 @@ const getSafeHeadingPlacement = (headingPlacement: number | string, maxImages: n
                 return Math.floor(maxImages / 2);
             case "end":
                 return maxImages;
+            case "middle":
+                return Math.ceil(maxImages / 2);
             case "top":
                 return -1;
             case "bottom":
