@@ -108,70 +108,54 @@ export const DividedBanner: React.FC<DividedBannerProps> = ({
     const hoverWidth = !expandOnHover ? "1" : "1.75";
     const gradientDirection = breakpointHeadingPlacement === 0 ? "to left" : "to right"; // TODO: Add support for other placements
 
-    return (
-        <Box
-            bg={`linear-gradient(${gradientDirection}, ${bgColor} 10%, #fff 50%, ${bgColor})`}
-            {...props}
-            mx="4"
-            boxShadow={useBoxShadow == true ? "0px 15px 10px 0px rgba(0, 0, 0, 0.2)" : "none"}
-        >
-            {isHeadingOnTop && heading && (
-                <BannerHeading
-                    heading={heading}
-                    headingAlignment={breakpointHeadingAlignment}
-                    flex={breakpointHeadingWidth}
-                />
-            )}
-            <Box
-                className="divided-banner"
-                style={{
-                    "--slantAmount": slantAmount,
-                    "--hoverWidth": hoverWidth,
-                    "height": bannerHeight,
-                } as React.CSSProperties}
-            >
-                {slicedImages.map((bg, index) => {
-                    const isFirst = index === 0;
-                    const isLast = index === slicedImages.length - 1;
-                    const firstClass = (!isHeadingInBanner || index < breakpointHeadingPlacement) && isFirst ? "first" : "";
-                    const lastClass = (!isHeadingInBanner || index >= breakpointHeadingPlacement) && isLast ? "last" : "";
-                    slantDirection = flipSlantAfterHeading && index === breakpointHeadingPlacement ? (slantDirection === "left" ? "right" : "left") : slantDirection;
-
-                    return (
-                        <React.Fragment key={index}>
-                            {heading && index === breakpointHeadingPlacement && (
-                                <BannerHeading
-                                    heading={heading}
-                                    headingAlignment={breakpointHeadingAlignment}
-                                    flex={breakpointHeadingWidth}
-                                />
-                            )}
-                            <img
-                                className={`banner-image ${slantDirection} ${firstClass} ${lastClass}`}
-                                style={{ backgroundImage: `url(${bg})`, backgroundSize: imageFit }}
-                                tabIndex={0}
-                            />
-                        </React.Fragment>
-                    );
-                })}
-
-                {heading && breakpointHeadingPlacement == slicedImages.length && (
-                    <BannerHeading
-                        heading={heading}
-                        headingAlignment={breakpointHeadingAlignment}
-                        flex={breakpointHeadingWidth}
-                    />
-                )}
-            </Box>
-            {isHeadingOnBottom && heading && (
-                <BannerHeading
-                heading={heading}
-                headingAlignment={breakpointHeadingAlignment}
-                flex={breakpointHeadingWidth}
-            />
-            )}
-        </Box>
+    const bannerHeading = heading && (
+        <BannerHeading
+            heading={heading}
+            headingAlignment={breakpointHeadingAlignment}
+            flex={breakpointHeadingWidth}
+        />
     );
+
+return (
+    <Box
+        bg={`linear-gradient(${gradientDirection}, ${bgColor} 10%, #fff 50%, ${bgColor})`}
+        {...props}
+        mx="4"
+        boxShadow={useBoxShadow == true ? "0px 15px 10px 0px rgba(0, 0, 0, 0.2)" : "none"}
+    >
+        {isHeadingOnTop && (bannerHeading)}
+        <Box
+            className="divided-banner"
+            style={{
+                "--slantAmount": slantAmount,
+                "--hoverWidth": hoverWidth,
+                "height": bannerHeight,
+            } as React.CSSProperties}
+        >
+            {slicedImages.map((bg, index) => {
+                const isFirst = index === 0;
+                const isLast = index === slicedImages.length - 1;
+                const firstClass = (!isHeadingInBanner || index < breakpointHeadingPlacement) && isFirst ? "first" : "";
+                const lastClass = (!isHeadingInBanner || index >= breakpointHeadingPlacement) && isLast ? "last" : "";
+                slantDirection = flipSlantAfterHeading && index === breakpointHeadingPlacement ? (slantDirection === "left" ? "right" : "left") : slantDirection;
+
+                return (
+                    <React.Fragment key={index}>
+                        {index === breakpointHeadingPlacement && (bannerHeading)}
+                        <img
+                            className={`banner-image ${slantDirection} ${firstClass} ${lastClass}`}
+                            style={{ backgroundImage: `url(${bg})`, backgroundSize: imageFit }}
+                            tabIndex={0}
+                        />
+                    </React.Fragment>
+                );
+            })}
+
+            {breakpointHeadingPlacement == slicedImages.length && (bannerHeading)}
+        </Box>
+        {isHeadingOnBottom && (bannerHeading)}
+    </Box>
+);
 };
 
 const getValueAtCurrentBreakpoint = <T,>(breakpoints: ([string, T][]), currentWidth: number, defaultValue: T): T => {

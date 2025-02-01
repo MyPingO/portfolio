@@ -1,7 +1,7 @@
 import * as Chakra from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
 import { Tag } from "@/components/ui/tag";
-import { Youtube, Github, Linkedin, PersonArmsUp, Translate, Code, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
+import { Youtube, Github, Linkedin, PersonArmsUp, Translate, CodeSlash, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
 import { Ruler, Atom, Brain, Volleyball, GraduationCap, Clapperboard, FileCode, Cylinder, BookText, SquareMousePointer } from 'lucide-react';
 import { DividedBanner } from "@/components/DividedBanner";
 
@@ -11,12 +11,12 @@ const Home = () => {
   const measurableStats = [
     { label: "Age", value: "22 years old", icon: <PersonArmsUp />, percentage: 22 },
     { label: "Spoken Languages", value: "English, Russian", icon: <Translate />, percentage: 30 },
-    { label: "Programming Languages", value: "8", icon: <Code />, percentage: 35 },
+    { label: "Programming Languages", value: "8", icon: <CodeSlash />, percentage: 35 },
     { label: "Anime Watched", value: "50+", icon: <Tv />, percentage: 45 },
     { label: "Lines of Code Written", value: "500,000+", icon: <FileCode strokeWidth={"1px"} />, percentage: 60 },
     { label: "Height", value: "5'11 | 180.35 cm", icon: <Ruler strokeWidth={"1px"} />, percentage: 75 },
     { label: "Gaming Skill", value: "Semi-pro", icon: <Controller />, percentage: 90 },
-    { label: "Cups of Tea Consumed", value: <InfinityIcon size={"1.5rem"} />, icon: <CupHot />, percentage: 100 },
+    { label: "Cups of Tea Consumed", value: <InfinityIcon size={"2rem"}/>, icon: <CupHot />, percentage: 100 },
   ];
 
   const favorites = [
@@ -34,7 +34,7 @@ const Home = () => {
   ];
 
   const personalInterests = [
-    { label: "Programming", icon: <Code /> },
+    { label: "Programming", icon: <CodeSlash /> },
     { label: "Video Editing", icon: <Tv /> },
     { label: "Photography", icon: <Clapperboard /> },
     { label: "Gaming", icon: <Controller /> },
@@ -73,7 +73,7 @@ const Home = () => {
               <Chakra.VStack align="flex-start">
                 <Chakra.HStack gap={2} justify={"space-between"} w="100%">
 
-                  <Chakra.Stack gap={2} flexDirection={{ base: "column", xs: "row" }} w={"100%"}>
+                  <Chakra.Stack gap={4} flexDirection={{ base: "column", xs: "row" }} w={"100%"}>
                     <Avatar
                       src="/LOGO.png"
                       name="MyPing0"
@@ -151,56 +151,58 @@ const Home = () => {
         <Chakra.Separator size="sm" />
 
         {/* Quick Stats Section */}
-        <Chakra.Box as="section" py={10} px={6} id="stats">
-          <Chakra.Heading size="4xl" textAlign="center" color="gray.800" mb={6}>
+        <Chakra.Box as="section" py={8} px={4} id="stats">
+          <Chakra.Heading
+            bgClip="text"
+            size="5xl"
+            textAlign="center"
+            pb={8}
+            color={"cyan.600"}
+            fontWeight={"normal"}
+          >
             Quick Stats
           </Chakra.Heading>
-          <Chakra.VStack gap={4} align="stretch">
+
+          <Chakra.SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap={6}>
             {measurableStats.map((stat, index) => (
-              <Chakra.Box key={index}>
-                <Chakra.Flex >
-                  {/* Icon */}
-                  <Chakra.VStack w={"100%"} align={"start"}>
+              <Chakra.Card.Root
+                key={index}
+                h={"100%"}
+                borderRadius="xl"
+                boxShadow="md"
+                transition="all 0.3s"
+                _hover={{
+                  transform: "translateY(-5px)",
+                  boxShadow: "xl",
+                }}
+                bgGradient="to-br" gradientFrom="white" gradientTo="cyan.50"
+              >
+                <Chakra.VStack
+                  m={0}
+                  p={8}
+                  gap={4}
+                  w={"100%"}
+                  h={"100%"}
+                  align="center"
+                  textAlign={"center"}
+                  justifyContent={"space-between"}
+                >
+                  <Chakra.Box fontSize="2xl" color="cyan.500">
+                    {stat.icon}
+                  </Chakra.Box>
 
-                    <Chakra.HStack justify={"space-between"} w={"100%"}>
-                      <Chakra.HStack gap={3}>
-                        <Chakra.Box fontSize="xl" color="cyan.500" w={6} h={6} display="flex" alignItems="center" justifyContent="start">
-                          {stat.icon}
-                        </Chakra.Box>
-                        {/* Label */}
-                        <Chakra.Text fontWeight="medium" color="gray.700">
-                          {stat.label}
-                        </Chakra.Text>
-                      </Chakra.HStack>
-                      {/* Value */}
-                      <Chakra.Text fontSize="sm" color="gray.600" textAlign={"end"}>
-                        {stat.value}
-                      </Chakra.Text>
-                    </Chakra.HStack>
+                  <Chakra.Text fontWeight="bold" fontSize="lg">
+                    {stat.label}
+                  </Chakra.Text>
 
-                    {/* Percentage Bar */}
-                    <Chakra.Flex
-                      bg="cyan.100"
-                      h="8px"
-                      w="100%"
-                      overflow="hidden"
-                      position="relative"
-                    >
-                      <Chakra.Box
-                        bg="cyan.500"
-                        h="100%"
-                        w={`${stat.percentage}%`}
-                        transition="width 0.3s ease-in-out"
-                      />
-                    </Chakra.Flex>
+                  <Chakra.Text fontWeight="bold" fontSize="lg" color={"cyan"}>
+                    {stat.value}
+                  </Chakra.Text>
 
-                  </Chakra.VStack>
-
-
-                </Chakra.Flex>
-              </Chakra.Box>
+                </Chakra.VStack>
+              </Chakra.Card.Root>
             ))}
-          </Chakra.VStack>
+          </Chakra.SimpleGrid>
         </Chakra.Box>
 
         {/* Favorites Section */}
@@ -258,7 +260,7 @@ const Home = () => {
             heading="Favorite Books"
             headingPlacement={"end"}
             headingWidth="1.6"
-            headingBreakpoints={{325: ["top", "center", .1], 400: ["end", "center", .1], 500: ["top"], 550: ["end", "center", 1], 650: ["end"], 750: ["top"], 800: ["end", "center", 1.5], 850: ["end", "center", 1.75], 950: ["end", "center", 2]}}
+            headingBreakpoints={{ 325: ["top", "center", .1], 400: ["end", "center", .1], 500: ["top"], 550: ["end", "center", 1], 650: ["end"], 750: ["top"], 800: ["end", "center", 1.5], 850: ["end", "center", 1.75], 950: ["end", "center", 2] }}
             slantAmount="0px"
             images={[
               "src/assets/surelyyourejokingmrfeynman.jpg",
@@ -273,8 +275,8 @@ const Home = () => {
           />
         </Chakra.VStack>
 
-      </Chakra.VStack>
-    </Chakra.Box>
+      </Chakra.VStack >
+    </Chakra.Box >
   );
 };
 
