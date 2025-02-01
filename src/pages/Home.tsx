@@ -1,8 +1,8 @@
 import * as Chakra from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar";
 import { Tag } from "@/components/ui/tag";
-import { Youtube, Github, Linkedin, PersonArmsUp, Translate, CodeSlash, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
-import { Ruler, Atom, Brain, Volleyball, GraduationCap, Clapperboard, FileCode, Cylinder, BookText, SquareMousePointer } from 'lucide-react';
+import { Youtube, Github, Linkedin, PersonArmsUp, Translate, CodeSlash, FileEarmarkCode, Tv, Controller, CupHot, Infinity as InfinityIcon, MusicNote } from "react-bootstrap-icons";
+import { Atom, Brain, Volleyball, GraduationCap, Clapperboard, Cylinder, BookText, SquareMousePointer } from 'lucide-react';
 import { DividedBanner } from "@/components/DividedBanner";
 
 
@@ -11,12 +11,10 @@ const Home = () => {
   const measurableStats = [
     { label: "Age", value: "22 years old", icon: <PersonArmsUp />, percentage: 22 },
     { label: "Spoken Languages", value: "English, Russian", icon: <Translate />, percentage: 30 },
-    { label: "Programming Languages", value: "8", icon: <CodeSlash />, percentage: 35 },
-    { label: "Anime Watched", value: "50+", icon: <Tv />, percentage: 45 },
-    { label: "Lines of Code Written", value: "500,000+", icon: <FileCode strokeWidth={"1px"} />, percentage: 60 },
-    { label: "Height", value: "5'11 | 180.35 cm", icon: <Ruler strokeWidth={"1px"} />, percentage: 75 },
+    { label: "Programming Languages", value: "Python, C#, Typescript, HTML/CSS", icon: <CodeSlash />, percentage: 35 },
+    { label: "Lines of Code Written", value: "500,000+", icon: <FileEarmarkCode/>, percentage: 60 },
     { label: "Gaming Skill", value: "Semi-pro", icon: <Controller />, percentage: 90 },
-    { label: "Cups of Tea Consumed", value: <InfinityIcon size={"2rem"}/>, icon: <CupHot />, percentage: 100 },
+    { label: "Cups of Tea Consumed", value: <InfinityIcon size={"2rem"} />, icon: <CupHot />, percentage: 100 },
   ];
 
   const favorites = [
@@ -152,50 +150,57 @@ const Home = () => {
 
         {/* Quick Stats Section */}
         <Chakra.Box as="section" py={8} px={4} id="stats">
-          <Chakra.Heading
-            bgClip="text"
-            size="5xl"
-            textAlign="center"
-            pb={8}
-            color={"cyan.600"}
-            fontWeight={"normal"}
-          >
-            Quick Stats
-          </Chakra.Heading>
-
-          <Chakra.SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap={6}>
+          <Chakra.SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} base={{mx: "auto"}} gap={4}>
             {measurableStats.map((stat, index) => (
               <Chakra.Card.Root
                 key={index}
-                h={"100%"}
-                borderRadius="xl"
+                borderRadius="none"
                 boxShadow="md"
-                transition="all 0.3s"
+                shadowColor={"cyan.200"}
+                transition="transform 0.3s, box-shadow 0.3s"
+                position="relative"
+                bgGradient="to-br"
+                gradientFrom="white"
+                gradientTo="rgb(234, 234, 234)"
+                _before={{
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  bgGradient: "to-br",
+                  gradientFrom: "white",
+                  gradientTo: "rgb(222, 243, 255)",
+                  opacity: 0,
+                  transition: "opacity 0.3s ease",
+                  pointerEvents: "none",
+                  zIndex: 0,
+                }}
                 _hover={{
+                  _before: {
+                    opacity: 1,
+                  },
                   transform: "translateY(-5px)",
                   boxShadow: "xl",
+                  cursor: "default",
                 }}
-                bgGradient="to-br" gradientFrom="white" gradientTo="cyan.50"
               >
                 <Chakra.VStack
-                  m={0}
                   p={8}
-                  gap={4}
                   w={"100%"}
                   h={"100%"}
                   align="center"
                   textAlign={"center"}
-                  justifyContent={"space-between"}
+                  justifyContent={"space-evenly"}
+                  position="relative"
+                  zIndex={1} // Crucial for keeping content above gradient
                 >
-                  <Chakra.Box fontSize="2xl" color="cyan.500">
+                  <Chakra.Box fontSize="5xl" color="cyan.500">
                     {stat.icon}
                   </Chakra.Box>
 
-                  <Chakra.Text fontWeight="bold" fontSize="lg">
-                    {stat.label}
-                  </Chakra.Text>
-
-                  <Chakra.Text fontWeight="bold" fontSize="lg" color={"cyan"}>
+                  <Chakra.Text fontWeight="" fontSize="lg" color={"rgb(0, 204, 255)"}>
                     {stat.value}
                   </Chakra.Text>
 
@@ -222,7 +227,7 @@ const Home = () => {
               "src/assets/grey.jpg",
               "src/assets/black.jpg",
             ]}
-            bgColor="rgb(237, 254, 255)"
+            bgColor="rgb(234, 254, 255)"
             bannerHeight="150px"
           />
           <DividedBanner
@@ -253,7 +258,7 @@ const Home = () => {
               "src/assets/pokemonblackandwhite.jpg",
               "src/assets/mariokart8.jpg",
             ]}
-            bgColor="rgb(187, 254, 255)"
+            bgColor="rgb(187, 255, 236)"
             bannerHeight="255px"
           />
           <DividedBanner
